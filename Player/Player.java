@@ -4,9 +4,14 @@ import java.util.List;
 import Card.Card;
 import Game.Game;
 
+
 public abstract class Player {
     private List<Card> cards;
-    private String state = "0"; // "0": not in game
+    private String state = "Pending";
+
+    protected Player(List<Card> cards) {
+        this.cards = cards;
+    };
 
     public void setState(String state) {
         this.state = state;

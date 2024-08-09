@@ -1,9 +1,12 @@
 package Card;
 
-public class Card {
+import Effects.Effect;
+
+public abstract class Card {
     private String color;
     private String value;
     private boolean isWild;
+
 
     protected Card(String color, String value, boolean isWild) {
         this.color = color;
