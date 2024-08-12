@@ -4,6 +4,7 @@ import Card.Card;
 import java.util.List;
 import Game.Game;
 import Rule.Rule;
+import Deck.Deck;
 
 
 public class DefaultPlayer extends Player {
@@ -13,12 +14,12 @@ public class DefaultPlayer extends Player {
     }
 
     @Override
-    public void draw(List<Card> deck, Game game) {
-        Rule.drawRule(this, game);
+    public void draw(Deck deck, Game game) {
+        game.getRule().drawRule(this, game);
     }
 
     @Override
-    public boolean placeCard(List<Card> playGround, Game game) {
-        return Rule.placeCardRule(this, game);
+    public void placeCard(List<Card> playGround, Game game) {
+        game.getRule().placeCardRule(this, game);
     }
 }

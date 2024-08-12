@@ -2,19 +2,22 @@ package Game;
 
 import java.util.List;
 import Card.Card;
+import Deck.Deck;
 import Player.Player;
+import Rule.Rule;
 
 
 public abstract class Game {
-    private List<Card> deck;
     private List<Card> playGround;
-    private boolean clockWise;
+    private boolean clockWise = true;
     private List<Player> activePlayers;
+    private Rule rule;
+    private Deck deck;
 
-    protected Game(List<Card> deck, boolean clockWise, List<Player> Players) {
-        this.deck = deck;
-        this.clockWise = clockWise;
+    protected Game(List<Player> Players, Rule rule, Deck deck) {
         this.activePlayers = Players;
+        this.rule = rule;
+        this.deck = deck;
     }
 
     public boolean isClockWise() {
@@ -23,10 +26,6 @@ public abstract class Game {
 
     public void reverse() {
         this.clockWise = !clockWise;
-    }
-
-    public List<Card> getDeck() {
-        return deck;
     }
 
     public List<Card> getPlayGround() {
@@ -45,6 +44,14 @@ public abstract class Game {
         return activePlayers.size();
     }
 
+    public Rule getRule() {
+        return rule;
+    }
+
+    public Deck getDeck() {
+        return deck;
+    }
+
     public String skip(){
         // TODO: implement this function
         return "Skip";
@@ -52,7 +59,6 @@ public abstract class Game {
 
     // initialization methods' template
     // 1: create deck
-    public abstract void createDeck(Game game);
 
     // 2: create players and give cards to players
     protected abstract void createPlayers(Game game, int noOfPlayers);
@@ -62,7 +68,6 @@ public abstract class Game {
 
     // initialization template method
     public void iniatilzeGame(Game game, int noOfPlayers, Card Card) {
-        createDeck(game);
         createPlayers(game, noOfPlayers);
         addToPlayGround(Card);
     }
