@@ -1,5 +1,6 @@
 package Effects;
 
+import Card.*;
 import Deck.Deck;
 import Game.Game;
 import Player.Player;
@@ -26,7 +27,14 @@ public class DrawFourEffect implements Effect {
 
     @Override
     public void execute(Game game, Player currentPlayer, Player nextPlayer){
+        // draw4
         for (int i = 0; i < 4; i++)
-            currentPlayer.draw(game.getDeck(), game);
+            currentPlayer.draw(game);
+
+        // change color
+        Card card = game.getPlayGround().getLast();
+        if(card instanceof SpecialCard specialcard)
+            specialcard.getSpecialEffect().execute(game, currentPlayer, nextPlayer);
+
     }
 }

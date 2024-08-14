@@ -4,7 +4,7 @@ public abstract class Card {
     private String color;
 
 
-    public Card(String color) {
+    protected Card(String color) {
         this.color = color;
     }
 

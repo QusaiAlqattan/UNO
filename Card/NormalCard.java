@@ -12,4 +12,9 @@ public class NormalCard extends Card {
     public String getNumber() {
         return number;
     }
+
+    @Override
+    public String toString() {
+        return this.getColor()+" "+this.number+" card";
+    }
 }

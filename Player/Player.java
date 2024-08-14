@@ -9,7 +9,7 @@ import Deck.Deck;
 public abstract class Player {
     private List<Card> cards;
 //    private String state = "Pending";
-    private String name;
+//    private String name;
 
     protected Player(List<Card> cards) {
         this.cards = cards;
@@ -31,12 +31,12 @@ public abstract class Player {
         return cards;
     }
 
-    public String getName() {
-        return name;
-    }
+//    public String getName() {
+//        return name;
+//    }
 
-    public abstract void draw(Deck deck, Game game);
+    public abstract boolean draw(Game game);
 
-    public abstract void placeCard(List<Card> playGround, Game game);
+    public abstract boolean placeCard(Game game);
 
 }

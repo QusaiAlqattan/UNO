@@ -14,12 +14,12 @@ public class DefaultPlayer extends Player {
     }
 
     @Override
-    public void draw(Deck deck, Game game) {
-        game.getRule().drawRule(this, game);
+    public boolean draw(Game game) {
+        return game.getRule().drawRule(this, game);
     }
 
     @Override
-    public void placeCard(List<Card> playGround, Game game) {
-        game.getRule().placeCardRule(this, game);
+    public boolean placeCard(Game game) {
+        return game.getRule().placeCardRule(this, game);
     }
 }

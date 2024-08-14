@@ -1,17 +1,18 @@
 package Rule;
 
-import Card.Card;
-import Card.SpecialCard;
-import Card.NormalCard;
-import Player.Player;
-import Player.DefaultPlayer;
+import Card.*;
+//import Card.SpecialCard;
+//import Card.NormalCard;
+import Player.*;
+//import Player.DefaultPlayer;
 import Game.Game;
-import java.util.List;
-import java.util.Random;
+//import java.util.List;
+//import java.util.Random;
 import java.util.*;
 import Deck.Deck;
 import Effects.*;
-import Rule.RuleToolBox.RuleToolBox;
+//import Rule.RuleToolBox.RuleToolBox;
+import Rule.RuleToolBox.*;
 
 
 public abstract class Rule {
@@ -20,15 +21,16 @@ public abstract class Rule {
         List<Card> playerHand = player.getCards();
         List<Card> playGround = game.getPlayGround();
 
-        Card lastPlacedUnoCard = playGround.get(playerHand.size() - 1);
+        Card lastPlacedUnoCard = playGround.getLast();;
 
         for (Card card : playerHand) {
             // TODO: fix this condition
             if (card instanceof SpecialCard && ((SpecialCard) card).isWild()
-            || card.getColor().equals(lastPlacedUnoCard.getColor())
+            || card.getColor().equals(game.getActiveColor())
             || card instanceof NormalCard && ((NormalCard) card).getNumber().equals(((NormalCard)lastPlacedUnoCard).getNumber())){
                 playerHand.remove(card);
                 playGround.add(card);
+
                 return true;
             }
         }
@@ -57,11 +59,11 @@ public abstract class Rule {
         // create wild cards
         // create ChangeColor cards
         for (int i = 0; i < 4; i++)
-            deckCards.add(new SpecialCard("Black", DrawFourEffect.getInstance(), true));
+            deckCards.add(new SpecialCard("Black", DrawFourEffect.getInstance(), true, "ChangeColor"));
 
         // create Draw4 cards
         for (int i = 0; i < 4; i++)
-            deckCards.add(new SpecialCard("Black", ChangeColorEffect.getInstance(), true));
+            deckCards.add(new SpecialCard("Black", ChangeColorEffect.getInstance(), true, "Draw4"));
 
 
         // create colored cards
@@ -79,9 +81,9 @@ public abstract class Rule {
 
             // create colored special effect cards
             for (int i = 0; i < 2; i++){
-                deckCards.add(new SpecialCard(color, SkipEffect.getInstance(), false));
-                deckCards.add(new SpecialCard(color, ReverseEffect.getInstance(), false));
-                deckCards.add(new SpecialCard(color, DrawTwoEffect.getInstance(), false));
+                deckCards.add(new SpecialCard(color, SkipEffect.getInstance(), false, "SkipCard"));
+                deckCards.add(new SpecialCard(color, ReverseEffect.getInstance(), false, "ReverseCard"));
+                deckCards.add(new SpecialCard(color, DrawTwoEffect.getInstance(), false, "Draw2"));
             }
         }
         return deckCards;
