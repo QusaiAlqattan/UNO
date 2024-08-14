@@ -26,15 +26,17 @@ public class DrawFourEffect implements Effect {
     }
 
     @Override
-    public void execute(Game game, Player currentPlayer, Player nextPlayer){
+    public void execute(Game game, Player currentPlayer, Player nextPlayer, int nextPlayerIndex){
         // draw4
         for (int i = 0; i < 4; i++)
-            currentPlayer.draw(game);
+            nextPlayer.draw(game);
+
+        System.out.println("bot"+nextPlayerIndex+" has drawn 4 cards");
 
         // change color
         Card card = game.getPlayGround().getLast();
         if(card instanceof SpecialCard specialcard)
-            specialcard.getSpecialEffect().execute(game, currentPlayer, nextPlayer);
+            specialcard.getSpecialEffect().execute(game, currentPlayer, nextPlayer, nextPlayerIndex);
 
     }
 }

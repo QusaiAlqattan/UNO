@@ -5,5 +5,5 @@ import Game.Game;
 import Player.Player;
 
 public interface Effect {
-    void execute(Game game, Player currentPlayer, Player nextPlayer);
+    void execute(Game game, Player currentPlayer, Player nextPlayer, int nextPlayerIndex);
 }

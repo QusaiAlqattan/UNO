@@ -2,7 +2,7 @@ package Game;
 
 import Card.*;
 import Deck.*;
-import Game.GameToolBox.IncrementCounter;
+import Game.GameToolBox.FlowCounter;
 import Player.*;
 import java.util.*;
 import Rule.*;
@@ -11,17 +11,17 @@ import Rule.*;
 public class DefaultGame extends Game {
     private static volatile DefaultGame instance;
 
-    private DefaultGame(List<Player> Players) {
-        super(Players);
+    private DefaultGame() {
+        super();
         String[] colors = {"Red", "Blue", "Yellow", "Green"};
         this.setColors(colors);
     }
 
-    public static DefaultGame getInstance(List<Player> Players) {
+    public static DefaultGame getInstance() {
         DefaultGame result = instance;
         if (result == null) {
             synchronized (DefaultGame.class) {
-                instance = result = new DefaultGame(Players);
+                instance = result = new DefaultGame();
             }
         }
         return result;
@@ -38,6 +38,7 @@ public class DefaultGame extends Game {
     // 2: create deck
     @Override
     public void setMyDeck(){
+        System.out.println("hi");
         this.setDeck(DefaultDeck.getInstance(this));
         this.getDeck().setCards(this.getRule().createDeckRule());
     }
@@ -64,7 +65,7 @@ public class DefaultGame extends Game {
 
     // 5: start game
     @Override
-    public void play(){
+    public void gameFlow(){
         List<Player> players = this.getActivePlayers();
 
         int i = 0;
@@ -72,17 +73,7 @@ public class DefaultGame extends Game {
             Player activePlayer = players.get(i);
 
             // set counter value
-            i = IncrementCounter.increment(i, players.size());
-
-            // check placed card effect
-            Card placedCard = this.getPlayGround().getLast();
-            if (placedCard instanceof SpecialCard){
-                ((SpecialCard) placedCard).getSpecialEffect().execute(this, activePlayer, players.get(i));
-                if (this.isSkip()){
-                    // placed card was a skip card
-                    i = IncrementCounter.increment(i, players.size());
-                }
-            }
+            i = FlowCounter.moveFlow(this, i, players.size());
 
             if(!(activePlayer.placeCard(this))){
                 // the player hasn't placed a card
@@ -95,12 +86,23 @@ public class DefaultGame extends Game {
                 // the player draw a card
             }else{
                 // the player has placed a card
-                placedCard = this.getPlayGround().getLast();
+                Card placedCard = this.getPlayGround().getLast();
                 System.out.println("bot"+i+" has placed a"+placedCard);
 
+                // check if player has won
                 if (activePlayer.getCards().isEmpty()){
                     System.out.println("bot"+i+" has no cards left");
                     this.removePlayer(activePlayer);
+                }
+
+                // run the card's effect
+                if (placedCard instanceof SpecialCard specialCard){
+                    specialCard.getSpecialEffect().execute(this, activePlayer, players.get(i), i);
+                    if (this.isSkip()){
+                        // placed card was a skip card
+                        i = FlowCounter.moveFlow(this, i, players.size());
+                        System.out.println("bot"+i+" was skipped");
+                    }
                 }
             }
         }

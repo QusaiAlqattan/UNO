@@ -25,7 +25,7 @@ public class ChangeColorEffect implements Effect {
     }
 
     @Override
-    public void execute(Game game, Player currentPlayer, Player nextPlayer){
+    public void execute(Game game, Player currentPlayer, Player nextPlayer, int nextPlayerIndex){
         Random random = new Random();
         int randomNumber = random.nextInt(game.getColors().length);
         String color = game.getColors()[randomNumber];

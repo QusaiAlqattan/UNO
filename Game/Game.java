@@ -5,7 +5,7 @@
 // wait TODO: ask, can i force subclasses to be singletons
 // done TODO: implement the play() method
 // done TODO: implement game.skip()
-// TODO: implement game.reverse()
+// done TODO: implement game.reverse()
 // done TODO: implement changeColorEffect
 // wait TODO: fix singleton in effects
 // done TODO: print
@@ -15,6 +15,7 @@
 
 package Game;
 
+import java.util.ArrayList;
 import java.util.List;
 import Card.*;
 import Deck.*;
@@ -23,18 +24,16 @@ import Rule.*;
 
 
 public abstract class Game {
-    private List<Card> playGround;
+    private List<Card> playGround = new ArrayList<>();
     private boolean clockWise = true;
-    private List<Player> activePlayers;
+    private List<Player> activePlayers = new ArrayList<Player>();
     private Rule rule;
     private Deck deck;
     private boolean isSkip;
     private String activeColor;
     private String[] colors;
 
-    protected Game(List<Player> Players) {
-        this.activePlayers = Players;
-    }
+    protected Game() {}
 
     public String[] getColors() {
         return colors;
@@ -107,18 +106,18 @@ public abstract class Game {
     public abstract void addToPlayGround(Game game);
 
     // 5: start game
-    public abstract void play();
+    public abstract void gameFlow();
 
     // initialization template method
-    public final void createGame(int noOfPlayers) {
-        // 1
+    public final void play() {
+        //1
         this.setMyRule();
 
         //2
         this.setMyDeck();
 
         //3
-        if (!(createPlayers(this, noOfPlayers))){
+        if (!(createPlayers(this, 4))){
             // TODO: raise exception
         }else{
             //4

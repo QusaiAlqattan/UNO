@@ -23,8 +23,10 @@ public class DrawTwoEffect implements Effect {
     }
 
     @Override
-    public void execute(Game game, Player currentPlayer, Player nextPlayer){
+    public void execute(Game game, Player currentPlayer, Player nextPlayer, int nextPlayerIndex){
         for (int i = 0; i < 2; i++)
-            currentPlayer.draw(game);
+            nextPlayer.draw(game);
+
+        System.out.println("bot"+nextPlayerIndex+" has drawn 2 cards");
     }
 }
