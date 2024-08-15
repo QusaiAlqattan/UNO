@@ -138,10 +138,8 @@ public abstract class Game {
 
             Player activePlayer = players.get(i);
 
-            // set counter value
-            i = FlowCounter.moveFlow(this, i, players.size());
-
-            Player nextPlayer = players.get(i);
+            int nextPlayerIndex = FlowCounter.moveFlow(this, i, players.size());
+            Player nextPlayer = players.get(nextPlayerIndex);
 
             if(!(activePlayer.placeCard(this))){
                 // the player hasn't placed a card
@@ -166,7 +164,7 @@ public abstract class Game {
 
                 // run the card's effect
                 if (placedCard instanceof SpecialCard specialCard){
-                    specialCard.getSpecialEffect().execute(this, activePlayer, nextPlayer, i);
+                    specialCard.getSpecialEffect().execute(this, activePlayer, nextPlayer, nextPlayerIndex);
                     if (this.isSkip()){
                         // placed card was a skip card
                         i = FlowCounter.moveFlow(this, i, players.size());
@@ -175,6 +173,8 @@ public abstract class Game {
                     }
                 }
             }
+            // set counter value
+            i = FlowCounter.moveFlow(this, i, players.size());
         }
     }
 
