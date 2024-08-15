@@ -2,6 +2,8 @@ package Rule.RuleToolBox;
 
 import Card.Card;
 import Deck.Deck;
+import Game.Game;
+import Player.Player;
 
 import java.util.*;
 
@@ -45,5 +47,19 @@ public abstract class RuleToolBox {
         scanner.close();
 
         return userInput;
+    }
+
+    public static int moveFlow(Game game, int i, int j) {
+        if (game.isClockWise()) {
+            i = (i + 1) % j;  // Move to the next index and wrap around using modulus
+        } else {
+            i = (i - 1 + j) % j;  // Move to the previous index and wrap around using modulus
+        }
+
+        return i;
+    }
+
+    public static void Scorer(Game game, List<Player> finishedPlayers){
+        game.getRule().scoringRule(finishedPlayers);
     }
 }

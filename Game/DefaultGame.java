@@ -2,10 +2,9 @@ package Game;
 
 import Card.*;
 import Deck.*;
-import Game.GameToolBox.FlowCounter;
-import Player.*;
-import java.util.*;
 import Rule.*;
+
+import java.util.*;
 
 
 public class DefaultGame extends Game {
@@ -31,7 +30,7 @@ public class DefaultGame extends Game {
     // 1: create a rule
     @Override
     public void setMyRule(){
-        this.setRule(DefaultRule.getInstance());
+        this.setRule(new Rule());
     }
 
     // 2: create deck
@@ -48,8 +47,14 @@ public class DefaultGame extends Game {
     }
 
     // 4: add first card to playground
-    // use original
+    @Override
+    public void addToPlayGround(Game game){
+        game.getRule().addToPlayGroundRule(game);
+    }
 
     // 5: game flow
-    // use original
+    @Override
+    public void gameFlow(Game game){
+        game.getRule().gameFlowRule(game);
+    }
 }

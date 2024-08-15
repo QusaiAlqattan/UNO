@@ -15,16 +15,14 @@
 // done TODO: remove singleton from effect
 // notDone TODO: make smart bots
 // done TODO: make user enter the number of players
+// done TODO: remove singleton from rule
 
 package Game;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import Card.*;
 import Deck.*;
-import Game.GameToolBox.FlowCounter;
 import Player.*;
 import Rule.*;
 
@@ -76,14 +74,14 @@ public abstract class Game {
         return activePlayers;
     }
 
-    public final void setRule(Rule rule){
+    public void setRule(Rule rule){
         this.rule = rule;
     }
     public Rule getRule() {
         return rule;
     }
 
-    public final void setDeck(Deck deck) {
+    public void setDeck(Deck deck) {
         this.deck = deck;
     }
     public Deck getDeck() {
@@ -108,75 +106,10 @@ public abstract class Game {
     protected abstract boolean createPlayers(Game game);
 
     // 4: add first card to playground
-    public void addToPlayGround(){
-        // get a random card from deck
-        boolean Special = true;
-        Card drawnCard = null;
-        while(Special){
-            List<Card> deckCards = deck.listCards();
-            Random random = new Random();
-            int index = random.nextInt(deckCards.size()); // Generate a random index
-            drawnCard = deckCards.get(index); // Get the card at that index
-
-            // place the random card
-            this.getPlayGround().add(drawnCard);
-
-            // check if placed card is special
-            if (!(drawnCard instanceof SpecialCard))
-                Special = false;
-        }
-
-        System.out.println("The "+drawnCard+" was placed into the playground");
-    }
+    public abstract void addToPlayGround(Game game);
 
     // 5: game flow
-    public void gameFlow(){
-        List<Player> players = this.getActivePlayers();
-
-        int i = 0;
-        while(players.size() > 2){
-
-            Player activePlayer = players.get(i);
-
-            int nextPlayerIndex = FlowCounter.moveFlow(this, i, players.size());
-            Player nextPlayer = players.get(nextPlayerIndex);
-
-            if(!(activePlayer.placeCard(this))){
-                // the player hasn't placed a card
-                if(!(activePlayer.draw(this))){
-                    // the player wasn't able to draw a card
-                    System.out.println("The Game has ended because the deck is empty");
-                    break;
-                }
-                System.out.println("bot"+activePlayer.getId()+" has drawn 1 card now he has "+activePlayer.getCards().size()+" cards" );
-
-                // the player draw a card
-            }else{
-                // the player has placed a card
-                Card placedCard = this.getPlayGround().getLast();
-                System.out.println("bot"+activePlayer.getId()+" has placed a "+placedCard+" now he has "+activePlayer.getCards().size()+" cards");
-
-                // check if player has won
-                if (activePlayer.getCards().isEmpty()){
-                    System.out.println("bot"+activePlayer.getId()+" has no cards left");
-                    this.removePlayer(activePlayer);
-                }
-
-                // run the card's effect
-                if (placedCard instanceof SpecialCard specialCard){
-                    specialCard.getSpecialEffect().execute(this, activePlayer, nextPlayer, nextPlayerIndex);
-                    if (this.isSkip()){
-                        // placed card was a skip card
-                        i = FlowCounter.moveFlow(this, i, players.size());
-                        System.out.println("bot"+nextPlayer.getId()+" was skipped");
-                        this.setSkip(false);
-                    }
-                }
-            }
-            // set counter value
-            i = FlowCounter.moveFlow(this, i, players.size());
-        }
-    }
+    public abstract void gameFlow(Game game);
 
     // initialization template method
     public final void play(){
@@ -191,10 +124,10 @@ public abstract class Game {
             // TODO: raise exception
         }else{
             //4
-            addToPlayGround();
+            addToPlayGround(this);
 
             //5
-            gameFlow();
+            gameFlow(this);
         }
     }
 }
