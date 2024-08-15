@@ -24,12 +24,14 @@ public abstract class Rule {
         Card lastPlacedUnoCard = playGround.getLast();;
 
         for (Card card : playerHand) {
-            // TODO: fix this condition
             if (card instanceof SpecialCard && ((SpecialCard) card).isWild()
             || card.getColor().equals(game.getActiveColor())
-            || card instanceof NormalCard && ((NormalCard) card).getNumber().equals(((NormalCard)lastPlacedUnoCard).getNumber())){
+            || card instanceof NormalCard && lastPlacedUnoCard instanceof NormalCard && ((NormalCard) card).getNumber().equals(((NormalCard)lastPlacedUnoCard).getNumber())){
                 playerHand.remove(card);
                 playGround.add(card);
+
+                //change active color
+                game.setActiveColor(card.getColor());
 
                 return true;
             }
@@ -57,13 +59,13 @@ public abstract class Rule {
         String[] numbers = {"1", "2", "3", "4","5","6","7","8","9"};
 
         // create wild cards
-        // create ChangeColor cards
-        for (int i = 0; i < 4; i++)
-            deckCards.add(new SpecialCard("Black", DrawFourEffect.getInstance(), true, "ChangeColor"));
-
         // create Draw4 cards
         for (int i = 0; i < 4; i++)
-            deckCards.add(new SpecialCard("Black", ChangeColorEffect.getInstance(), true, "Draw4"));
+            deckCards.add(new SpecialCard("Black", new DrawFourEffect(), true, "Draw4"));
+
+        // create ChangeColor cards
+        for (int i = 0; i < 4; i++)
+            deckCards.add(new SpecialCard("Black", new ChangeColorEffect(), true, "ChangeColor"));
 
 
         // create colored cards
@@ -81,9 +83,9 @@ public abstract class Rule {
 
             // create colored special effect cards
             for (int i = 0; i < 2; i++){
-                deckCards.add(new SpecialCard(color, SkipEffect.getInstance(), false, "SkipCard"));
-                deckCards.add(new SpecialCard(color, ReverseEffect.getInstance(), false, "ReverseCard"));
-                deckCards.add(new SpecialCard(color, DrawTwoEffect.getInstance(), false, "Draw2"));
+                deckCards.add(new SpecialCard(color, new SkipEffect(), false, "SkipCard"));
+                deckCards.add(new SpecialCard(color, new ReverseEffect(), false, "ReverseCard"));
+                deckCards.add(new SpecialCard(color, new DrawTwoEffect(), false, "Draw2"));
             }
         }
         return deckCards;
@@ -99,7 +101,7 @@ public abstract class Rule {
                     playerHand.add(wantedCard);
                     deck.removeCard(wantedCard);
                 }
-                game.addPlayer(new DefaultPlayer(playerHand));
+                game.addPlayer(new DefaultPlayer(playerHand, i));
             }
             return true;
         }

@@ -9,10 +9,11 @@ import Deck.Deck;
 public abstract class Player {
     private List<Card> cards;
 //    private String state = "Pending";
-//    private String name;
+    private int id;
 
-    protected Player(List<Card> cards) {
+    protected Player(List<Card> cards, int id) {
         this.cards = cards;
+        this.id = id;
     };
 
 //    public void setState(String state) {
@@ -31,9 +32,9 @@ public abstract class Player {
         return cards;
     }
 
-//    public String getName() {
-//        return name;
-//    }
+    public int getId() {
+        return id;
+    }
 
     public abstract boolean draw(Game game);
 

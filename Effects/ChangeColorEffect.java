@@ -8,22 +8,6 @@ import java.util.*;
 
 public class ChangeColorEffect implements Effect {
 
-    private static volatile ChangeColorEffect instance;
-
-    private ChangeColorEffect() {
-        super();
-    }
-
-    public static ChangeColorEffect getInstance() {
-        ChangeColorEffect result = instance;
-        if (result == null) {
-            synchronized (ChangeColorEffect.class) {
-                instance = result = new ChangeColorEffect();
-            }
-        }
-        return result;
-    }
-
     @Override
     public void execute(Game game, Player currentPlayer, Player nextPlayer, int nextPlayerIndex){
         Random random = new Random();

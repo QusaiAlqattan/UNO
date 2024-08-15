@@ -9,8 +9,8 @@ import Deck.Deck;
 
 public class DefaultPlayer extends Player {
 
-    public DefaultPlayer(List<Card> cards) {
-        super(cards);
+    public DefaultPlayer(List<Card> cards, int id) {
+        super(cards, id);
     }
 
     @Override
