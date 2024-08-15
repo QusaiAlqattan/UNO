@@ -2,19 +2,19 @@
 // done TODO: if game singleton is fixed, reflect it on effects
 // notDone TODO: ?deck constructor uses the create default deck rule
 // done TODO: fix game creation template
-// wait TODO: ask, can i force subclasses to be singletons
+// notDone TODO: ask, can i force subclasses to be singletons
 // done TODO: implement the play() method
 // done TODO: implement game.skip()
 // done TODO: implement game.reverse()
 // done TODO: implement changeColorEffect
-// wait TODO: fix singleton in effects
+// done TODO: fix singleton in effects
 // done TODO: print
-// TODO: demo
-// wait TODO: fix placeCard rule
+// done TODO: demo
+// notDone TODO: fix placeCard rule
 // TODO: exception handling
 // done TODO: remove singleton from effect
-// TODO: make smart bots
-// TODO: make user enter the number of players
+// notDone TODO: make smart bots
+// done TODO: make user enter the number of players
 
 package Game;
 
@@ -105,7 +105,7 @@ public abstract class Game {
     public abstract void setMyDeck();
 
     // 3: create players and give cards to players
-    protected abstract boolean createPlayers(Game game, int noOfPlayers);
+    protected abstract boolean createPlayers(Game game);
 
     // 4: add first card to playground
     public void addToPlayGround(){
@@ -187,7 +187,7 @@ public abstract class Game {
         this.setMyDeck();
 
         //3
-        if (!(createPlayers(this, 4))){
+        if (!(createPlayers(this))){
             // TODO: raise exception
         }else{
             //4

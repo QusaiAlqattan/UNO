@@ -91,7 +91,9 @@ public abstract class Rule {
         return deckCards;
     }
 
-    public boolean createPlayersRule(Game game, int noOfPlayers) {
+    public boolean createPlayersRule(Game game) {
+        int noOfPlayers = RuleToolBox.getNoOfPlayers(10, 2);
+
         Deck deck = game.getDeck();
         if (noOfPlayers > 1) {
             for (int i = 0; i < noOfPlayers; i++) {

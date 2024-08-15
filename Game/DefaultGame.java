@@ -43,8 +43,8 @@ public class DefaultGame extends Game {
 
     // 3: create players and give cards to them
     @Override
-    public boolean createPlayers(Game game, int noOfPlayers){
-        return game.getRule().createPlayersRule(game, noOfPlayers);
+    public boolean createPlayers(Game game){
+        return game.getRule().createPlayersRule(game);
     }
 
     // 4: add first card to playground
