@@ -1,11 +1,5 @@
 package Game;
 
-import Card.*;
-import Deck.*;
-import Rule.*;
-
-import java.util.*;
-
 
 public class DefaultGame extends Game {
     private static volatile DefaultGame instance;

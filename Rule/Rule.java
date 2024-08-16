@@ -1,22 +1,15 @@
 package Rule;
 
 import Card.*;
-//import Card.SpecialCard;
-//import Card.NormalCard;
 import Player.*;
-//import Player.DefaultPlayer;
-import Game.Game;
-//import java.util.List;
-//import java.util.Random;
+import Game.*;
 import java.util.*;
-import Deck.Deck;
+import Deck.*;
 import Effects.*;
-//import Rule.RuleToolBox.*;
 import Rule.RuleToolBox.*;
 
 
 public class Rule {
-    // not static methods because static methods can't be overridden
 
     public boolean placeCardRule(Player player, Game game){
         List<Card> playerHand = player.getCards();
@@ -105,30 +98,26 @@ public class Rule {
                 }else if (j == 2){
                     System.out.println("bot"+finishedPlayer.getId()+" was 3rd ");
                 }else{
-                    System.out.println("bot"+finishedPlayer.getId()+" was "+(j+1)+" th");
+                    System.out.println("bot"+finishedPlayer.getId()+" was "+(j+1)+"th");
                 }
             }
             System.out.println("The rest didn't finish");
         }
     }
 
-    public boolean createPlayersRule(Game game) {
-        int noOfPlayers = RuleToolBox.getNoOfPlayers(10, 2);
+    public void createPlayersRule(Game game, int max, int min) {
+        int noOfPlayers = RuleToolBox.getNoOfPlayers(max, min);
 
         Deck deck = game.getDeck();
-        if (noOfPlayers > 1) {
-            for (int i = 0; i < noOfPlayers; i++) {
-                List<Card> playerHand = new ArrayList<>(); // Initialize the list
-                for (int j = 0; j < 7; j++) {
-                    Card wantedCard = RuleToolBox.getRandomCardFromDeck(deck);
-                    playerHand.add(wantedCard);
-                    deck.removeCard(wantedCard);
-                }
-                game.addPlayer(new Player(playerHand, i));
+        for (int i = 0; i < noOfPlayers; i++) {
+            List<Card> playerHand = new ArrayList<>(); // Initialize the list
+            for (int j = 0; j < 7; j++) {
+                Card wantedCard = RuleToolBox.getRandomCardFromDeck(deck);
+                playerHand.add(wantedCard);
+                deck.removeCard(wantedCard);
             }
-            return true;
+            game.addPlayer(new Player(playerHand, i));
         }
-        return false;
     }
 
     public void addToPlayGroundRule(Game game){

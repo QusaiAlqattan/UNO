@@ -1,12 +1,10 @@
 package Rule.RuleToolBox;
 
-import Card.Card;
-import Deck.Deck;
-import Game.Game;
-import Player.Player;
-
+import Card.*;
+import Player.*;
+import Game.*;
 import java.util.*;
-
+import Deck.*;
 
 public abstract class RuleToolBox {
     public static Card getRandomCardFromDeck(Deck deck){

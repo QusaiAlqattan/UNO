@@ -1,10 +1,6 @@
 package Deck;
 
-import Card.Card;
 import Game.Game;
-import Player.Player;
-import java.util.List;
-import Rule.Rule;
 
 
 public class DefaultDeck extends Deck{
