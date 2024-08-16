@@ -124,7 +124,7 @@ public class Rule {
                     playerHand.add(wantedCard);
                     deck.removeCard(wantedCard);
                 }
-                game.addPlayer(new DefaultPlayer(playerHand, i));
+                game.addPlayer(new Player(playerHand, i));
             }
             return true;
         }

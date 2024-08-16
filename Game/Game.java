@@ -97,19 +97,30 @@ public abstract class Game {
 
     // initialization methods' template
     // 1: create a rule
-    public abstract void setMyRule();
+    public void setMyRule(){
+        this.setRule(new Rule());
+    }
 
-    // 2: create a deck
-    public abstract void setMyDeck();
+    // 2: create deck
+    public void setMyDeck(){
+        this.setDeck(DefaultDeck.getInstance(this));
+        this.getDeck().setCards(this.getRule().createDeckRule());
+    }
 
-    // 3: create players and give cards to players
-    protected abstract boolean createPlayers(Game game);
+    // 3: create players and give cards to them
+    public boolean createPlayers(Game game){
+        return game.getRule().createPlayersRule(game);
+    }
 
     // 4: add first card to playground
-    public abstract void addToPlayGround(Game game);
+    public void addToPlayGround(Game game){
+        game.getRule().addToPlayGroundRule(game);
+    }
 
     // 5: game flow
-    public abstract void gameFlow(Game game);
+    public void gameFlow(Game game){
+        game.getRule().gameFlowRule(game);
+    }
 
     // initialization template method
     public final void play(){

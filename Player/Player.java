@@ -6,11 +6,11 @@ import Game.Game;
 import Deck.Deck;
 
 
-public abstract class Player {
+public class Player {
     private List<Card> cards;
     private int id;
 
-    protected Player(List<Card> cards, int id) {
+    public Player(List<Card> cards, int id) {
         this.cards = cards;
         this.id = id;
     };
@@ -27,8 +27,12 @@ public abstract class Player {
         return id;
     }
 
-    public abstract boolean draw(Game game);
+    public boolean draw(Game game) {
+        return game.getRule().drawRule(this, game);
+    }
 
-    public abstract boolean placeCard(Game game);
+    public boolean placeCard(Game game) {
+        return game.getRule().placeCardRule(this, game);
+    }
 
 }
