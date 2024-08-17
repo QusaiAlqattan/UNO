@@ -77,7 +77,6 @@ public abstract class Game {
     // initialization methods' template
     // 1: create deck
     public void setMyDeck(){
-//        this.setDeck(DefaultDeck.getInstance(this));
         this.setDeck(this.getRule().createDeckRule(this));
     }
 
