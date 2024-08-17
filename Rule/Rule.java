@@ -179,7 +179,7 @@ public class Rule {
 
                 // run the card's effect
                 if (placedCard instanceof SpecialCard specialCard){
-                    specialCard.getSpecialEffect().execute(game, activePlayer, nextPlayer, nextPlayerIndex);
+                    specialCard.getSpecialEffect().execute(game, activePlayer, nextPlayer);
                     if (game.isSkip()){
                         // placed card was a skip card
                         i = RuleToolBox.moveFlow(game, i, players.size());

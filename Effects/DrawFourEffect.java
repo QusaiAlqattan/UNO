@@ -9,7 +9,7 @@ import java.util.List;
 public class DrawFourEffect implements Effect {
 
     @Override
-    public void execute(Game game, Player currentPlayer, Player nextPlayer, int nextPlayerIndex){
+    public void execute(Game game, Player currentPlayer, Player nextPlayer){
         // draw4
         for (int i = 0; i < 4; i++)
             nextPlayer.draw(game);
@@ -18,7 +18,7 @@ public class DrawFourEffect implements Effect {
 
         // change color
         ChangeColorEffect changeColorEffect = new ChangeColorEffect();
-        changeColorEffect.execute(game, currentPlayer, nextPlayer, nextPlayerIndex);
+        changeColorEffect.execute(game, currentPlayer, nextPlayer);
 
     }
 }
