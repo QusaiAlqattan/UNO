@@ -4,7 +4,6 @@ import Card.*;
 import Player.*;
 import Game.*;
 import java.util.*;
-import Deck.*;
 import Effects.*;
 import Rule.RuleToolBox.*;
 
@@ -34,15 +33,14 @@ public class Rule {
     }
 
     public boolean drawRule(Player player, Game game){
-        Deck deck = game.getDeck();
-        if (deck.listCards().isEmpty()){
+        List<Card> deck = game.getDeck();
+        if (deck.isEmpty()){
             return false;
         }
-        List<Card> deckCards = deck.listCards();
         Random random = new Random();
-        int index = random.nextInt(deckCards.size()); // Generate a random index
-        Card drawnCard = deckCards.get(index); // Get the card at that index
-        deckCards.remove(index); // Remove the card from the deck
+        int index = random.nextInt(deck.size()); // Generate a random index
+        Card drawnCard = deck.get(index); // Get the card at that index
+        deck.remove(index); // Remove the card from the deck
         player.addCard(drawnCard); // Add the card to the player's cards
         return true;
     }
@@ -111,13 +109,13 @@ public class Rule {
     public void createPlayersRule(Game game, int max, int min) {
         int noOfPlayers = RuleToolBox.getNoOfPlayers(max, min);
 
-        Deck deck = game.getDeck();
+        List<Card> deck = game.getDeck();
         for (int i = 0; i < noOfPlayers; i++) {
             List<Card> playerHand = new ArrayList<>(); // Initialize the list
             for (int j = 0; j < 7; j++) {
                 Card wantedCard = RuleToolBox.getRandomCardFromDeck(deck);
                 playerHand.add(wantedCard);
-                deck.removeCard(wantedCard);
+                deck.remove(wantedCard);
             }
             game.addPlayer(new Player(playerHand, i));
         }
@@ -125,15 +123,14 @@ public class Rule {
 
     public void addToPlayGroundRule(Game game){
         // get a random card from deck
-        Deck deck = game.getDeck();
+        List<Card> deck = game.getDeck();
 
         boolean Special = true;
         Card drawnCard = null;
         while(Special){
-            List<Card> deckCards = deck.listCards();
             Random random = new Random();
-            int index = random.nextInt(deckCards.size()); // Generate a random index
-            drawnCard = deckCards.get(index); // Get the card at that index
+            int index = random.nextInt(deck.size()); // Generate a random index
+            drawnCard = deck.get(index); // Get the card at that index
 
             // place the random card
             game.getPlayGround().add(drawnCard);

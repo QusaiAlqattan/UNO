@@ -1,7 +1,6 @@
 package Effects;
 
 import Card.*;
-import Deck.Deck;
 import Game.Game;
 import Player.Player;
 

@@ -2,7 +2,6 @@ package Effects;
 
 import Game.Game;
 import Player.Player;
-import Deck.Deck;
 
 public class DrawTwoEffect implements Effect {
 

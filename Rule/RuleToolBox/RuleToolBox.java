@@ -4,14 +4,12 @@ import Card.*;
 import Player.*;
 import Game.*;
 import java.util.*;
-import Deck.*;
 
 public abstract class RuleToolBox {
-    public static Card getRandomCardFromDeck(Deck deck){
-        List<Card> deckCards = deck.listCards();
+    public static Card getRandomCardFromDeck(List<Card> deck){
         Random random = new Random();
-        int index = random.nextInt(deckCards.size());
-        return deckCards.get(index);
+        int index = random.nextInt(deck.size());
+        return deck.get(index);
     }
 
     public static int getNoOfPlayers(int max, int min){

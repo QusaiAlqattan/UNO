@@ -3,7 +3,6 @@ package Game;
 import java.util.*;
 
 import Card.*;
-import Deck.*;
 import Player.*;
 import Rule.*;
 
@@ -13,7 +12,7 @@ public abstract class Game {
     private boolean clockWise = true;
     private List<Player> activePlayers = new ArrayList<Player>();
     private Rule rule;
-    private Deck deck;
+    private List<Card> deck;
     private boolean isSkip;
     private String activeColor;
     private String[] colors;
@@ -61,10 +60,10 @@ public abstract class Game {
         return rule;
     }
 
-    public void setDeck(Deck deck) {
+    public void setDeck(List<Card> deck) {
         this.deck = deck;
     }
-    public Deck getDeck() {
+    public List<Card> getDeck() {
         return deck;
     }
 
@@ -78,8 +77,8 @@ public abstract class Game {
     // initialization methods' template
     // 1: create deck
     public void setMyDeck(){
-        this.setDeck(DefaultDeck.getInstance(this));
-        this.getDeck().setCards(this.getRule().createDeckRule(this));
+//        this.setDeck(DefaultDeck.getInstance(this));
+        this.setDeck(this.getRule().createDeckRule(this));
     }
 
     // 2: create players and give cards to them
