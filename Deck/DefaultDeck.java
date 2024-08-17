@@ -8,7 +8,7 @@ public class DefaultDeck extends Deck{
 
 
     private DefaultDeck(Game game) {
-        this.setCards(game.getRule().createDeckRule());
+        this.setCards(game.getRule().createDeckRule(game));
     }
 
     public static DefaultDeck getInstance(Game game) {

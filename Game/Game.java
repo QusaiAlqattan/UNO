@@ -18,7 +18,9 @@ public abstract class Game {
     private String activeColor;
     private String[] colors;
 
-    protected Game() {}
+    protected Game(Rule rule) {
+        this.rule = rule;
+    }
 
     public String[] getColors() {
         return colors;
@@ -55,9 +57,6 @@ public abstract class Game {
         return activePlayers;
     }
 
-    public void setRule(Rule rule){
-        this.rule = rule;
-    }
     public Rule getRule() {
         return rule;
     }
@@ -77,47 +76,40 @@ public abstract class Game {
     }
 
     // initialization methods' template
-    // 1: create a rule
-    public void setMyRule(){
-        this.setRule(new Rule());
-    }
-
-    // 2: create deck
+    // 1: create deck
     public void setMyDeck(){
         this.setDeck(DefaultDeck.getInstance(this));
-        this.getDeck().setCards(this.getRule().createDeckRule());
+        this.getDeck().setCards(this.getRule().createDeckRule(this));
     }
 
-    // 3: create players and give cards to them
+    // 2: create players and give cards to them
     public void createPlayers(Game game){
         game.getRule().createPlayersRule(game, 10, 2);
     }
 
-    // 4: add first card to playground
+    // 3: add first card to playground
     public void addToPlayGround(Game game){
         game.getRule().addToPlayGroundRule(game);
     }
 
-    // 5: game flow
+    // 4: game flow
     public void gameFlow(Game game){
         game.getRule().gameFlowRule(game);
     }
 
     // initialization template method
     public final void play(){
-        //1
-        this.setMyRule();
 
-        //2
+        //1
         this.setMyDeck();
 
-        //3
+        //2
         createPlayers(this);
 
-        //4
+        //3
         addToPlayGround(this);
 
-        //5
+        //4
         gameFlow(this);
     }
 }

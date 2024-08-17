@@ -20,7 +20,7 @@ public class Rule {
         for (Card card : playerHand) {
             if (card instanceof SpecialCard && ((SpecialCard) card).isWild()
             || card.getColor().equals(game.getActiveColor())
-            || card instanceof NormalCard && lastPlacedUnoCard instanceof NormalCard && ((NormalCard) card).getNumber().equals(((NormalCard)lastPlacedUnoCard).getNumber())){
+            || card instanceof NumberedCard && lastPlacedUnoCard instanceof NumberedCard && ((NumberedCard) card).getNumber().equals(((NumberedCard)lastPlacedUnoCard).getNumber())){
                 playerHand.remove(card);
                 playGround.add(card);
 
@@ -47,9 +47,12 @@ public class Rule {
         return true;
     }
 
-    public List<Card> createDeckRule(){
+    public List<Card> createDeckRule(Game game){
         List<Card> deckCards = new ArrayList<>();
+
         String[] colors = {"Red", "Yellow", "Green", "Blue"};
+        game.setColors(colors);
+
         String[] numbers = {"1", "2", "3", "4","5","6","7","8","9"};
 
         // create wild cards
@@ -63,15 +66,15 @@ public class Rule {
 
 
         // create colored cards
-        for (String color : colors) {
+        for (String color : game.getColors()) {
             // create "0" card
-            deckCards.add(new NormalCard(color, "0"));
+            deckCards.add(new NumberedCard(color, "0"));
 
             // create numbered cards
             int count = 1;
             for (String number : numbers) {
                 for (int i = 0; i < 2; i++)
-                    deckCards.add(new NormalCard(color, String.valueOf(count)));
+                    deckCards.add(new NumberedCard(color, String.valueOf(count)));
                 count++;
             }
 

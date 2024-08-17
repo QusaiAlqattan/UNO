@@ -1,10 +1,10 @@
 package Card;
 
-public class NormalCard extends Card {
+public class NumberedCard extends Card {
     private String number;
 
 
-    public NormalCard(String color, String number) {
+    public NumberedCard(String color, String number) {
         super(color);
         this.number = number;
     }
